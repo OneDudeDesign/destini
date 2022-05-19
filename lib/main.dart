@@ -1,9 +1,12 @@
 import 'package:destini/story_brain.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(Destini());
+void main() => runApp(const Destini());
 
 class Destini extends StatelessWidget {
+  const Destini({Key? key}) : super(key: key);
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark(),
@@ -15,6 +18,8 @@ class Destini extends StatelessWidget {
 StoryBrain storyBrain = StoryBrain();
 
 class StoryPage extends StatefulWidget {
+  const StoryPage({Key? key}) : super(key: key);
+
   _StoryPageState createState() => _StoryPageState();
 }
 
@@ -24,8 +29,16 @@ class _StoryPageState extends State<StoryPage> {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-            image: DecorationImage(image: AssetImage('images/background.png'))),
-        padding: const EdgeInsets.symmetric(vertical: 50.0, horizontal: 15.0),
+          image: DecorationImage(
+            image: AssetImage(
+              'images/background.png',
+            ),
+          ),
+        ),
+        padding: const EdgeInsets.symmetric(
+          vertical: 50.0,
+          horizontal: 15.0,
+        ),
         constraints: const BoxConstraints.expand(),
         child: SafeArea(
           child: Column(
@@ -44,43 +57,42 @@ class _StoryPageState extends State<StoryPage> {
               ),
               Expanded(
                 flex: 2,
-                child: FlatButton(
+                child: TextButton(
                   onPressed: () {
                     //Choice 1 made by user.
                     setState(() {
                       storyBrain.nextStory(1);
                     });
                   },
-                  color: Colors.red,
+                  style: TextButton.styleFrom(backgroundColor: Colors.red),
+                  // color: Colors.red,
                   child: Text(
                     storyBrain.getChoice1(),
-                    style: const TextStyle(
-                      fontSize: 20.0,
-                    ),
+                    style: const TextStyle(fontSize: 20.0, color: Colors.white),
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
               Expanded(
                 flex: 2,
-                //TODO: Step 26 - Use a Flutter Visibility Widget to wrap this FlatButton.
-                //TODO: Step 28 - Set the "visible" property of the Visibility Widget to equal the output from the buttonShouldBeVisible() method in the storyBrain.
                 child: Visibility(
                   visible: storyBrain.buttonShouldBeVisible(),
-                  child: FlatButton(
+                  child: TextButton(
                     onPressed: () {
                       //Choice 2 made by user.
                       setState(() {
                         storyBrain.nextStory(2);
                       });
                     },
-                    color: Colors.blue,
+                    //color: Colors.blue,
+                    style: TextButton.styleFrom(backgroundColor: Colors.blue),
                     child: Text(
                       storyBrain.getChoice2(),
                       style: const TextStyle(
                         fontSize: 20.0,
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -93,5 +105,3 @@ class _StoryPageState extends State<StoryPage> {
     );
   }
 }
-
-//TODO: Step 29 - Run the app and test it against the Story Outline to make sure you've completed all the steps. The code for the completed app can be found here: https://github.com/londonappbrewery/destini-challenge-completed/
